@@ -434,7 +434,7 @@ body {
       <p>Volume 18 (2025) — Article Index & Search</p>
       <div style="margin-top:8px;display:flex;gap:12px;flex-wrap:wrap">
         <a href="https://www.sciopen.com/journal/1998-0124" target="_blank" style="color:#fff;font-size:0.85rem;text-decoration:none;border:1px solid rgba(255,255,255,0.5);padding:4px 12px;border-radius:4px">Home page</a>
-        <a href="https://www.sciopen.com/journal/1998-0124" target="_blank" style="color:#fff;font-size:0.85rem;text-decoration:none;border:1px solid rgba(255,255,255,0.5);padding:4px 12px;border-radius:4px">Submission link</a>
+        <a href="https://mc03.manuscriptcentral.com/nanores" target="_blank" style="color:#fff;font-size:0.85rem;text-decoration:none;border:1px solid rgba(255,255,255,0.5);padding:4px 12px;border-radius:4px">Submission link</a>
       </div>
     </div>
   </div>
@@ -756,7 +756,7 @@ function downloadRIS(idx) {
   if (a.volume) ris.push('VL  - ' + a.volume);
   if (a.issue) ris.push('IS  - ' + a.issue);
   if (a.abstract) ris.push('AB  - ' + (a.abstract||'').replace(/<[^>]+>/g, '').replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).replace(/\\\//g,'/').replace(/\\\\/g,'\\').replace(/\s+/g,' ').trim());
-  if (a.doi) ris.push('UR  - https://www.sciopen.com/article/' + a.doi);
+  if (a.doi) ris.push('UR  - https://doi.org/' + a.doi);
   if (a.doi) ris.push('DO  - ' + a.doi);
   const fn = (a.doi||'ECMF').replace(/[/\\]/g,'_') + '.ris';
   download(ris.join('\r\n') + '\r\n', fn, 'application/x-research-info-systems;charset=utf-8;');
