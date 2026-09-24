@@ -610,13 +610,13 @@ function render() {
       return `<span style="display:inline-block;white-space:nowrap">${esc(name)}</span>`;
     });
     const shortNames = formattedAuthors.join(', ');
-    const kws = (a.keywords||[]).slice(0,5).map(k => `<span class="kw">${highlight(k.replace(/<[^>]+>/g, ''), currentQuery)}</span>`).join('');
+    const kws = (a.keywords||[]).slice(0,5).map(k => `<span class="kw">${highlight((k||'').replace(/<[^>]+>/g, ''), currentQuery)}</span>`).join('');
     const volIssue = (a.volume || a.issue) ? `Vol.${a.volume||'?'} Iss. ${a.issue||'?'}` : '';
 
     return `
     <div class="card" data-idx="${i}">
       <div class="card-head" onclick="toggle(this.parentElement)">
-        <div class="card-title">${highlight(a.title.replace(/<[^>]+>/g, ''), currentQuery)}</div>
+        <div class="card-title">${highlight((a.title||'').replace(/<[^>]+>/g, ''), currentQuery)}</div>
         <div class="badges">
           <span class="badge-year">${a.year || '?'}</span>
           ${a.type ? `<span class="badge-type">${esc(a.type)}</span>` : ''}
@@ -642,7 +642,7 @@ function render() {
           ${a.firstpage ? `<div class="d-item"><label>Pages</label><span>${a.firstpage}-${a.lastpage}</span></div>` : ''}
           ${a.publication_date ? `<div class="d-item"><label>Published</label><span>${esc(a.publication_date)}</span></div>` : ''}
         </div>
-        ${a.abstract ? `<div class="d-abstract"><strong>Abstract:</strong> ${highlight(a.abstract.replace(/<[^>]+>/g, ''), currentQuery)}</div>` : ''}
+        ${a.abstract ? `<div class="d-abstract"><strong>Abstract:</strong> ${highlight((a.abstract||'').replace(/<[^>]+>/g, ''), currentQuery)}</div>` : ''}
         <div class="d-links">
           ${a.doi ? `<a href="https://www.sciopen.com/article/${a.doi}" target="_blank" onclick="event.stopPropagation()">View on SciOpen →</a>` : ''}
           
@@ -756,7 +756,7 @@ function downloadRIS(idx) {
   if (a.lastpage) ris.push('EP  - ' + a.lastpage);
   if (a.volume) ris.push('VL  - ' + a.volume);
   if (a.issue) ris.push('IS  - ' + a.issue);
-  if (a.abstract) ris.push('AB  - ' + a.abstract.replace(/<[^>]+>/g, '').replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).replace(/\\\//g,'/').replace(/\\\\/g,'\\').replace(/\s+/g,' ').trim());
+  if (a.abstract) ris.push('AB  - ' + (a.abstract||'').replace(/<[^>]+>/g, '').replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).replace(/\\\//g,'/').replace(/\\\\/g,'\\').replace(/\s+/g,' ').trim());
   if (a.doi) ris.push('UR  - https://www.sciopen.com/article/' + a.doi);
   if (a.doi) ris.push('DO  - ' + a.doi);
   const fn = (a.doi||'ECMF').replace(/[/\\]/g,'_') + '.ris';
