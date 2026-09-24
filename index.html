@@ -519,7 +519,7 @@ let currentQuery = '';
 function applyFilters() {
   const q = $search.value.trim();
   currentQuery = q;
-  const yv = $year.value, tv = $type.value, av = $area.value;
+  const yv = $year.value, tv = $type.value;
   filteredArticles = allArticles
     .map(a => {
       if (yv && a.year != yv) return null;
