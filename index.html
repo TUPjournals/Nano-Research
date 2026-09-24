@@ -639,7 +639,7 @@ function render() {
         <div class="detail-grid">
           ${a.doi ? `<div class="d-item"><label>DOI</label><span>${esc(a.doi)}</span></div>` : ''}
           ${a.volume ? `<div class="d-item"><label>Volume(Issue)</label><span>${a.volume}(${a.issue})</span></div>` : ''}
-          ${a.firstpage ? `<div class="d-item"><label>Pages</label><span>${a.firstpage}-${a.lastpage}</span></div>` : ''}
+          ${a.firstpage ? `<div class="d-item"><label>Article number</label><span>${a.firstpage}</span></div>` : ''}
           ${a.publication_date ? `<div class="d-item"><label>Published</label><span>${esc(a.publication_date)}</span></div>` : ''}
         </div>
         ${a.abstract ? `<div class="d-abstract"><strong>Abstract:</strong> ${highlight((a.abstract||'').replace(/<[^>]+>/g, ''), currentQuery)}</div>` : ''}
@@ -688,7 +688,7 @@ function getCiteText(a) {
   const year = a.year || '';
   const title = (a.title || '').replace(/<[^>]+>/g, '');
   const volIssue = (a.volume || a.issue) ? `${a.volume||''}(${a.issue||''})` : '';
-  const pages = (a.firstpage && a.lastpage) ? `${a.firstpage}-${a.lastpage}` : '';
+  const pages = a.firstpage || '';
   const doiUrl = `https://www.sciopen.com/article/${a.doi || ''}`;
   return `${authorStr}. ${title}. Nano Research, ${year}, ${volIssue}: ${pages}. ${doiUrl}`;
 }
@@ -753,7 +753,6 @@ function downloadRIS(idx) {
   ris.push('JO  - Nano Research');
   ris.push('SN  - 1998-0124');
   if (a.firstpage) ris.push('SP  - ' + a.firstpage);
-  if (a.lastpage) ris.push('EP  - ' + a.lastpage);
   if (a.volume) ris.push('VL  - ' + a.volume);
   if (a.issue) ris.push('IS  - ' + a.issue);
   if (a.abstract) ris.push('AB  - ' + (a.abstract||'').replace(/<[^>]+>/g, '').replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).replace(/\\\//g,'/').replace(/\\\\/g,'\\').replace(/\s+/g,' ').trim());
@@ -797,7 +796,7 @@ function generateBibTeX(a) {
   bib += '  journal = {Nano Research},\n';
   if (a.volume) bib += '  volume = {' + a.volume + '},\n';
   if (a.issue) bib += '  number = {' + a.issue + '},\n';
-  if (a.firstpage && a.lastpage) bib += '  pages = {' + a.firstpage + '-' + a.lastpage + '},\n';
+  if (a.firstpage) bib += '  pages = {' + a.firstpage + '},\n';
   if (a.doi) {
     bib += '  doi = {' + a.doi + '},\n';
     bib += '  url = {https://www.sciopen.com/article/' + a.doi + '},\n';
