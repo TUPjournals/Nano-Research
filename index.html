@@ -691,7 +691,7 @@ function getCiteText(a) {
   const title = (a.title || '').replace(/<[^>]+>/g, '');
   const volIssue = (a.volume || a.issue) ? `${a.volume||''}(${a.issue||''})` : '';
   const pages = a.firstpage || '';
-  const doiUrl = `https://www.sciopen.com/article/${a.doi || ''}`;
+  const doiUrl = `https://doi.org/${a.doi || ''}`;
   return `${authorStr}. ${title}. Nano Research, ${year}, ${volIssue}: ${pages}. ${doiUrl}`;
 }
 
